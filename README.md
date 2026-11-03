@@ -1,10 +1,23 @@
 # Milo: um app de finanças pessoais com Open Finance, em 8 dias
 
+**Português** · [English](README.en.md)
+
 > Case study sem código. Como montei o app, o que quebrou no caminho e o que eu faria diferente.
 
 [![Assista ao vídeo de 84 segundos](media/cover.png)](media/milo-demo.mp4)
 
-**▶ [Vídeo de 84 s](media/milo-demo.mp4)** · todos os dados do vídeo e das imagens são fictícios (modo demonstração do próprio app). Nenhum dado bancário real aparece neste repositório.
+**▶ Vídeo de 84 s:** [assistir com player](media/milo-demo.mp4) (dá para pausar e voltar) · [baixar o .mp4](media/milo-demo.mp4?raw=true)
+
+| trecho | | trecho | |
+| --- | --- | --- | --- |
+| 0:00 | abertura | 0:50 | chat com tools |
+| 0:03 | Início em widgets | 1:02 | investimentos |
+| 0:11 | ocultar valores | 1:07 | planejamento do mês |
+| 0:14 | fatura aberta calculada | 1:12 | saúde das conexões |
+| 0:23 | gastos por grupo | 1:17 | fechamento |
+| 0:31 | categoria vira regra | | |
+
+Todos os dados do vídeo e das imagens são fictícios (modo demonstração do próprio app). Nenhum dado bancário real aparece neste repositório.
 
 ---
 
