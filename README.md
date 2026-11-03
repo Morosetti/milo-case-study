@@ -2,9 +2,21 @@
 
 **Português** · [English](README.en.md)
 
-> Case study sem código. Como montei o app, o que quebrou no caminho e o que eu faria diferente.
+[![Pergunta ao assistente e card montado com o resultado da tool. Clique para ver o vídeo completo](media/demo-chat.gif)](media/milo-demo.mp4)
 
-[![Assista ao vídeo de 84 segundos](media/cover.png)](media/milo-demo.mp4)
+### Destaques
+
+- **O modelo é proibido de calcular.** As tools do assistente são consultas SQL executadas com o JWT do usuário, então a RLS continua valendo. Os cards da resposta são montados com o JSON da tool, não com o texto gerado.
+- **Uma camada de dados com duas implementações.** A versão fictícia em memória e a do Supabase têm as mesmas assinaturas: as telas foram feitas antes do backend, os testes rodam sem tocar em dado real, e o vídeo foi gravado nela.
+- **Bugs de valor rastreados até a causa.** Compra internacional gravada na moeda original, estornos ignorados na fatura e o ciclo do cartão que recomeça no dia do fechamento, cada um com sintoma, causa e correção na seção 2. Guardar o JSON bruto de cada transação permitiu consertar sem reimportar.
+
+| | |
+| --- | --- |
+| Tempo | 8 dias de construção (08/10 a 15/10/2026) e alguns dias de uso e correção depois |
+| Commits | 51 |
+| App | ~11 mil linhas de TypeScript, 35 telas |
+| Backend | 19 tabelas com RLS, 11 migrações, 7 Edge Functions, 4 jobs no pg_cron |
+| Testes | 56 casos no plano de teste, Playwright + axe na web demo, verificação manual no celular via adb |
 
 **▶ Vídeo de 84 s:** [assistir com player](media/milo-demo.mp4) (dá para pausar e voltar) · [baixar o .mp4](media/milo-demo.mp4?raw=true)
 
@@ -21,20 +33,13 @@ Todos os dados do vídeo e das imagens são fictícios (modo demonstração do p
 
 ---
 
+> Case study sem código. Como montei o app, o que quebrou no caminho e o que eu faria diferente.
+
 ## Em uma frase
 
 O Milo junta minhas contas e cartões pelo Open Finance, mostra a fatura aberta, os gastos e o planejamento do mês, e tem um assistente que responde perguntas como "quanto gastei com mercado nos últimos 30 dias?" com números tirados do banco de dados, nunca inventados pelo modelo.
 
 É um app de uso pessoal, para mim e para alguns familiares. Não está nas lojas e não cobra nada.
-
-| | |
-| --- | --- |
-| Tempo | 8 dias de construção (08/10 a 15/10/2026) e alguns dias de uso e correção depois |
-| Commits | 51 |
-| App | ~11 mil linhas de TypeScript, 35 telas |
-| Backend | 19 tabelas com RLS, 11 migrações, 7 Edge Functions, 4 jobs no pg_cron |
-| Testes | 56 casos no plano de teste, Playwright + axe na web demo, verificação manual no celular via adb |
-| Quem fez | eu, programando em par com o Claude Code |
 
 ![Início, cartão, assistente e planejamento](media/telas.png)
 
@@ -94,6 +99,8 @@ flowchart LR
 5. **Fatia vertical primeiro.** A primeira entrega foi o caminho mais fino de ponta a ponta: conectar um banco → ver as transações → perguntar "quanto gastei este mês?". Isso provou Pluggy, RLS, Gemini com tools e o APK no celular antes de qualquer tela bonita.
 
 ### O processo
+
+O desenvolvimento foi feito em par com o Claude Code, como método de trabalho. Continuaram sendo decisão minha a arquitetura, a investigação dos bugs de valor e as regras de reconciliação da fatura.
 
 Trabalhei em etapas curtas, cada uma com um documento de saída:
 
@@ -224,3 +231,7 @@ Da leitura das avaliações saiu esta lista, em ordem:
 - **Por que sem código:** o app guarda dados financeiros meus e da minha família, e o repositório privado tem configuração de projeto (Supabase, Firebase) que não faz sentido expor. Aqui fica só o que dá para aprender com ele.
 - **Dados:** vídeo e imagens foram gravados no modo demonstração, com bancos, lojas e valores fictícios ("Banco Roxo", "Cafeteria Grão").
 - **Ferramentas:** o vídeo foi gravado com Playwright na versão web do app (viewport de celular) e montado com ffmpeg.
+
+---
+
+Outro case study: [Otto](https://github.com/Morosetti/otto-case-study)

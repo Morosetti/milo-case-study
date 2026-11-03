@@ -2,9 +2,21 @@
 
 [Português](README.md) · **English**
 
-> A case study with no code. How I put the app together, what broke along the way and what I would do differently.
+[![Question to the assistant and a card built from the tool result. Click to watch the full video](media/demo-chat.gif)](media/milo-demo.mp4)
 
-[![Watch the 84-second video](media/cover.png)](media/milo-demo.mp4)
+### Highlights
+
+- **The model is forbidden to calculate.** The assistant's tools are SQL queries run with the user's JWT, so RLS still applies. The answer cards are built from the tool's JSON, not from the generated text.
+- **One data layer, two implementations.** The in-memory fictional version and the Supabase version have the same signatures: screens were built before the backend, tests run without touching real data, and the video was recorded on it.
+- **Money bugs traced to their cause.** Foreign purchases stored in the original currency, refunds ignored on the bill and a card cycle that restarts on the closing day, each with symptom, cause and fix in section 2. Keeping the raw JSON of every transaction made the fixes possible without a re-import.
+
+| | |
+| --- | --- |
+| Time | 8 days of building (Oct 8–15, 2026), then a few days of use and fixes |
+| Commits | 51 |
+| App | ~11k lines of TypeScript, 35 screens |
+| Backend | 19 tables with RLS, 11 migrations, 7 Edge Functions, 4 pg_cron jobs |
+| Tests | 56 cases in the test plan, Playwright + axe on the web demo, manual checks on the phone over adb |
 
 **▶ 84 s video:** [watch in the player](media/milo-demo.mp4) (pause and scrub back) · [download the .mp4](media/milo-demo.mp4?raw=true) · captions are in Portuguese
 
@@ -21,20 +33,13 @@ All data in the video and images is fictional (the app's own demo mode). No real
 
 ---
 
+> A case study with no code. How I put the app together, what broke along the way and what I would do differently.
+
 ## In one sentence
 
 Milo pulls my bank accounts and credit cards through Brazil's Open Finance, shows the open card bill, spending and the monthly plan, and has an assistant that answers questions like "how much did I spend on groceries in the last 30 days?" with numbers taken from the database, never made up by the model.
 
 It is for personal use, for me and a few family members. It is not in the app stores and costs nothing.
-
-| | |
-| --- | --- |
-| Time | 8 days of building (Oct 8–15, 2026), then a few days of use and fixes |
-| Commits | 51 |
-| App | ~11k lines of TypeScript, 35 screens |
-| Backend | 19 tables with RLS, 11 migrations, 7 Edge Functions, 4 pg_cron jobs |
-| Tests | 56 cases in the test plan, Playwright + axe on the web demo, manual checks on the phone over adb |
-| Who | me, pair-programming with Claude Code |
 
 ![Home, card, assistant and monthly plan](media/telas.png)
 
@@ -94,6 +99,8 @@ flowchart LR
 5. **Vertical slice first.** The first delivery was the thinnest end-to-end path: connect a bank → see the transactions → ask "how much did I spend this month?". It proved Pluggy, RLS, Gemini with tools and the APK on the phone before any polished screen existed.
 
 ### The process
+
+Development was done pair-programming with Claude Code, as a working method. The architecture, the investigation of the money bugs and the bill reconciliation rules remained my decisions.
 
 I worked in short stages, each with a written output:
 
@@ -224,3 +231,7 @@ The review analysis produced this list, in order:
 - **Why no code:** the app holds financial data for me and my family, and the private repo has project configuration (Supabase, Firebase) that makes no sense to expose. This repo holds only what you can learn from it.
 - **Data:** the video and images were recorded in demo mode, with fictional banks, stores and amounts ("Banco Roxo", "Cafeteria Grão").
 - **Tools:** the video was recorded with Playwright on the app's web build (phone viewport) and edited with ffmpeg.
+
+---
+
+Another case study: [Otto](https://github.com/Morosetti/otto-case-study)
